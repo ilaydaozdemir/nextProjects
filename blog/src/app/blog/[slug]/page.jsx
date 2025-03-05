@@ -1,7 +1,16 @@
 import Image from "next/image";
 import styles from "./singlePost.module.css";
+const getData = async (slug) => {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`);
 
-const SinglePostPage = () => {
+  if (!res.ok) {
+    throw new error("something went wrong");
+  }
+  return res.json();
+};
+const SinglePostPage = async ({ params }) => {
+  const { slug } = params;
+  const post = await getData(slug);
   return (
     <div className={styles.container}>
       <div className={styles.imgContainer}>
@@ -13,9 +22,8 @@ const SinglePostPage = () => {
         />
       </div>
       <div className={styles.textContainer}>
-        <h1 className={styles.title}>title</h1>
+        <h1 className={styles.title}>{post.title}</h1>
         <div className={styles.detail}>
-          {" "}
           <Image
             src="https://images.pexels.com/photos/4836103/pexels-photo-4836103.jpeg"
             alt=""
@@ -32,19 +40,7 @@ const SinglePostPage = () => {
             <span className={styles.detailValue}>01.01.2024</span>
           </div>
         </div>
-        <div className={styles.content}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut
-          facilisis odio. Proin dignissim odio sit amet arcu consectetur,
-          porttitor ornare lacus maximus. Aenean maximus, mauris eget hendrerit
-          mattis, nisi sapien faucibus ligula, at suscipit nisi lorem eget
-          purus. Praesent porta purus eget neque vehicula pulvinar. Aenean
-          gravida consectetur odio, nec auctor felis convallis vitae.
-          Suspendisse pulvinar sem a lectus vulputate, ac vulputate tellus
-          molestie. Proin non elementum massa, in pretium turpis. In faucibus
-          porttitor est, in pretium risus aliquet at. Lorem ipsum dolor sit
-          amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Sed vel dapibus urna.
-        </div>
+        <div className={styles.content}>{post.body}</div>
       </div>
     </div>
   );
