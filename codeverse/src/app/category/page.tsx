@@ -1,3 +1,3 @@
 export default function CategoryPage() {
-  return <div>category page</div>;
+  return <div className="mainContainer">category page</div>;
 }
