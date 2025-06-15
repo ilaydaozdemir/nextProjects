@@ -7,7 +7,14 @@ export default function Home() {
       <div className="slideSide">
         <Image src="/homepage.jpg" alt="Logo" width={450} height={350} />
       </div>
-      <div className="mainContent">admin page</div>
+      <div className="mainContent">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis
+        laborum quibusdam odio necessitatibus suscipit dicta optio ipsa
+        voluptates praesentium est voluptate saepe quis consectetur deserunt,
+        dolorum, repudiandae, provident sint molestiae distinctio nobis! Minus
+        qui nihil ad perspiciatis, incidunt vitae blanditiis a deserunt esse
+        assumenda veniam.
+      </div>
     </div>
   );
 }
