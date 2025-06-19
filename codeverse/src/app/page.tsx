@@ -4,16 +4,28 @@ import classes from "./page.module.css";
 export default function Home() {
   return (
     <div className={classes.mainContainer}>
-      <div className="slideSide">
-        <Image src="/homepage.jpg" alt="Logo" width={450} height={350} />
+      <div className={classes.title}>
+        CodeVerse’e Hoş Geldiniz: Kodlama Arkadaşınız
       </div>
-      <div className="mainContent">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis
-        laborum quibusdam odio necessitatibus suscipit dicta optio ipsa
-        voluptates praesentium est voluptate saepe quis consectetur deserunt,
-        dolorum, repudiandae, provident sint molestiae distinctio nobis! Minus
-        qui nihil ad perspiciatis, incidunt vitae blanditiis a deserunt esse
-        assumenda veniam.
+      <div className={classes.mainContent}>
+        <div className={classes.slideSide}>
+          <Image src="/homepage.jpg" alt="Logo" width={450} height={350} />
+        </div>
+        <div className="mainContent">
+          <b>
+            CodeVerse, web geliştirme dünyasına adım atan herkes için
+            tasarlanmış modern ve kullanıcı dostu bir platformdur.
+          </b>
+          <br /> Burada; Güncel teknoloji ve araçlarla hazırlanmış örnek
+          projeler bulabilir, <br />
+          Frontend ve backend konularında faydalı kaynaklara ulaşabilir, <br />{" "}
+          Kendi projelerinizi yönetip paylaşabilir, <br /> Kodlama
+          becerilerinizi geliştirmek için rehberler ve ipuçları
+          keşfedebilirsiniz. <br />
+          Amacımız, hem yeni başlayanlara hem de deneyimli geliştiricilere ilham
+          vermek ve birlikte öğrenme ortamı yaratmaktır. CodeVerse ile kodlama
+          yolculuğunuzda her adımda yanınızdayız!
+        </div>
       </div>
     </div>
   );
