@@ -1,4 +1,5 @@
 import SearchForm from "@/components/SearchForm";
+import StartupCard from "@/components/StartupCard";
 
 export default async function Home({
   searchParams,
@@ -6,6 +7,19 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query;
+
+  const posts = [
+    {
+      _createdAt: new Date(),
+      views: 55,
+      author: { _id: 1 },
+      _id: 1,
+      description: "This is a description",
+      image: "",
+      category: "Robots",
+      title: "We Robots",
+    },
+  ];
   return (
     <>
       <section
@@ -27,6 +41,20 @@ export default async function Home({
           Competitions.
         </p>
         <SearchForm query={query} />
+      </section>
+      <section className="px-6 py-10 max-w-7xl mx-auto">
+        <p className="font-semibold">
+          {query ? `Search results for ${query}` : "All Startups"}
+        </p>
+        <ul className="mt-7  grid md:grid-cols-3 sm:grid-cols-2 gap-5">
+          {posts?.length > 0 ? (
+            posts.map((post: StartupCardType) => (
+              <StartupCard key={post?._id} post={post} />
+            ))
+          ) : (
+            <p>No startups found</p>
+          )}
+        </ul>
       </section>
     </>
   );
