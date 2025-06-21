@@ -1,2 +1,6 @@
-import { handlers } from "@/auth"; // Referring to the auth.ts we just created
-export const { GET, POST } = handlers;
+import { NextResponse } from "next/server";
+import { posts } from "@/lib/mock/posts";
+
+export async function GET() {
+  return NextResponse.json(posts);
+}

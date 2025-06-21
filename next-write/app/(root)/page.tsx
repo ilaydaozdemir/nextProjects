@@ -1,25 +1,39 @@
+// app/page.tsx veya app/home/page.tsx (Next.js 13+ App Router)
+
 import SearchForm from "@/components/SearchForm";
-import StartupCard from "@/components/StartupCard";
+import StartupCard, { StartupCardType } from "@/components/StartupCard";
+
+const getPosts = async (): Promise<StartupCardType[]> => {
+  // Burada gerçek API endpoint'ini koymalısın, örn:
+  // 'http://localhost:3000/api/posts' veya başka bir URL
+  const res = await fetch("http://localhost:3000/api/auth/nextauth", {
+    cache: "no-store",
+  });
+
+  if (!res.ok) throw new Error("Posts alınırken hata oluştu.");
+
+  return res.json();
+};
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ query?: string }>;
+  searchParams: { query?: string };
 }) {
-  const query = (await searchParams).query;
+  const query = searchParams.query || "";
 
-  const posts = [
-    {
-      _createdAt: new Date(),
-      views: 55,
-      author: { _id: 1, name: "ilayda" },
-      _id: 1,
-      description: "This is a description",
-      image: "",
-      category: "Robots",
-      title: "We Robots",
-    },
-  ];
+  let posts = await getPosts();
+
+  // Basit arama filtresi (title veya description içinde query geçiyorsa)
+  if (query) {
+    const qLower = query.toLowerCase();
+    posts = posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(qLower) ||
+        post.description.toLowerCase().includes(qLower)
+    );
+  }
+
   return (
     <>
       <section
@@ -42,19 +56,21 @@ export default async function Home({
         </p>
         <SearchForm query={query} />
       </section>
+
       <section className="px-6 py-10 max-w-7xl mx-auto">
         <p className="font-semibold">
-          {query ? `Search results for ${query}` : "All Startups"}
+          {query ? `Search results for "${query}"` : "All Startups"}
         </p>
-        <ul className="mt-7  grid md:grid-cols-3 sm:grid-cols-2 gap-5">
-          {posts?.length > 0 ? (
-            posts.map((post: StartupCardType) => (
-              <StartupCard key={post?._id} post={post} />
-            ))
-          ) : (
-            <p>No startups found</p>
-          )}
-        </ul>
+
+        {posts.length > 0 ? (
+          <ul className="mt-7 grid md:grid-cols-3 sm:grid-cols-2 gap-5">
+            {posts.map((post) => (
+              <StartupCard key={post._id} post={post} />
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-7 text-center text-gray-500">No startups found</p>
+        )}
       </section>
     </>
   );
